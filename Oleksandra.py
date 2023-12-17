@@ -36,11 +36,8 @@ class Solution(object):
             return (lst[lst_len//2] + lst[lst_len//2 - 1]) / 2
 
 
-def main():
+if __name__ == "__main__":
     sol = Solution()
-
     lst1 = [3,4]
     lst2 = [1,2]
     print(sol.findMedianSortedArrays(lst2, lst1))
-
-main()

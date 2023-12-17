@@ -18,10 +18,11 @@ def puzzle1():
         first_found = False
         for i in line:
             if i.isnumeric() and not first_found:
-                first = i
+                first = last = i # first is last sometimes
                 first_found = True
             if i.isnumeric() and first_found:
                 last = i
+                
         sum_res = sum_res + int(str(first) + str(last))
     return sum_res
 
@@ -89,6 +90,7 @@ def puzzle2():
                     last = "9"
 
         if not last.isnumeric(): last = first # first is last sometimes
+
         sum_res += int(str(first) + str(last))
     return sum_res
     

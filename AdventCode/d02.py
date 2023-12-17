@@ -1,6 +1,7 @@
 import re
 
 # day 2, p1
+
 """
 Determine which games would have been possible 
 if the bag had been loaded with only 
@@ -48,11 +49,47 @@ def is_valid_game(game):
     else:
         return int(game_id)
 
+# Puzzle 1 Solution
 def sum_valid_games(game_records):
     id_sum = 0
     for game in game_records:
         id_sum += is_valid_game(game)
     return id_sum
 
+# determines the minimum number of boxes of each color
+# Returns them multiplied
+def multiply_min_boxes(game):
+    red = 1
+    green = 1
+    blue = 1
+
+    # get substr after the :
+    game = game.split(": ")[1]
+
+    # split str into 'num color' substrs
+    records = re.split(', |; ', game)
+
+    for record in records:
+        # remove \n (if present)
+        record = record.strip()
+        # split number and color
+        record = re.split(" ", record)
+        if record[1] == 'red' and int(record[0]) > red:
+            red = int(record[0])
+        elif record[1] == 'green' and int(record[0]) > green:
+            green = int(record[0])
+        elif record[1] == 'blue' and int(record[0]) > blue:
+            blue = int(record[0])
+    return red*green*blue
+
+# Puzzle 2 Solution
+def sum_powers_of_games(game_records):
+    power_sum = 0
+    for game in game_records:
+        power_sum += multiply_min_boxes(game)
+    return power_sum
+
 if __name__ == "__main__":
-    print(sum_valid_games(games))
+    print(f"Puzzle 1: {sum_valid_games(games)}")
+    print(f"Puzzle 2: {sum_powers_of_games(games)}")
+

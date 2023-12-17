@@ -1,6 +1,6 @@
 import re
 
-# day 2, p1
+# Day 2, p1
 
 """
 Determine which games would have been possible 

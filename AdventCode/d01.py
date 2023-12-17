@@ -1,7 +1,7 @@
 # day 1, p1
 
 # open file n read lines
-ifile = open("./d01.txt", "r")
+ifile = open("d01.txt", "r")
 lines = ifile.readlines()
 
 # for p2

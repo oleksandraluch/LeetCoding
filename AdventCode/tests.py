@@ -24,15 +24,12 @@ class TestDay02(unittest.TestCase):
 class testDay03(unittest.TestCase):
 
     def test_get_adjacent_indexes(self):
-
         self.assertEqual(get_adjacent_indexes("...."), [])
-
         self.assertEqual(get_adjacent_indexes(""), [])
-
         self.assertEqual(get_adjacent_indexes("83@.*."), [2, 1, 3, 4, 5])
-
         self.assertEqual(get_adjacent_indexes("..83@.*.951*..984*111..-@"), [4, 3, 5, 6, 7, 11, 10, 12, 17, 16, 18, 23, 22, 24])
 
+    def test_puzzle1(self):
         self.assertEqual(sum_all_adjacent_numbers(), 528819)
 
 if __name__ == "__main__":

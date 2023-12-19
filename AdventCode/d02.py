@@ -93,3 +93,4 @@ if __name__ == "__main__":
     print(f"Puzzle 1: {sum_valid_games(games)}")
     print(f"Puzzle 2: {sum_powers_of_games(games)}")
 
+    ifile.close()

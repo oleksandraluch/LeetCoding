@@ -3,6 +3,7 @@
 # open file n read lines
 ifile = open("d01_input.txt", "r")
 lines = ifile.readlines()
+ifile.close()
 
 # for p2
 digits = ["zero", "one", "two", "three", "four",
@@ -97,5 +98,3 @@ def puzzle2():
 if __name__ == "__main__":
     print(f"Puzzle 1: {puzzle1()}") # 57346 for d01.txt
     print(f"Puzzle 2: {puzzle2()}") # 57345 for d01.txt
-
-    ifile.close()

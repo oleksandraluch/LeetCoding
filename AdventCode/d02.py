@@ -12,6 +12,7 @@ What is the sum of the IDs of those games?
 # open file and read lines
 ifile = open("d02_input.txt", "r")
 games = ifile.readlines()
+ifile.close()
 
 max_red = 12
 max_green = 13
@@ -92,5 +93,3 @@ def sum_powers_of_games(game_records):
 if __name__ == "__main__":
     print(f"Puzzle 1: {sum_valid_games(games)}")
     print(f"Puzzle 2: {sum_powers_of_games(games)}")
-
-    ifile.close()

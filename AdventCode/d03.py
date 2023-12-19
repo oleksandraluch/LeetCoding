@@ -92,9 +92,21 @@ def get_adjacent_indexes_and_nums(line, symbols="0123456789"):
             reading_num = True
             curr_num += val
             adj_dict[index] = ["empty"]
+            # add prev index
+            if index > 0:
+                adj_dict[index - 1] = ["empty"]
+            # add next index
+            if index < len(line) - 2:
+                adj_dict[index + 1] = ["empty"]
         elif val in symbols and reading_num:
             curr_num += val
             adj_dict[index] = ["empty"]
+            # add prev index
+            if index > 0:
+                adj_dict[index - 1] = ["empty"]
+            # add next index
+            if index < len(line) - 2:
+                adj_dict[index + 1] = ["empty"]
         else:
             if len(curr_num) > 0:
                 for key in adj_dict:
@@ -118,10 +130,11 @@ def sum_gear_ratios(filename="d03_input.txt"):
     ifile = open(filename, "r")
     lines = ifile.readlines()
     ifile.close()
-    #total_sum = 0
+    total_sum = 0
 
-    # for index, line in enumerate(lines):
-    print(get_adjacent_indexes_and_nums(lines[0]))
+    for index, line in enumerate(lines):
+        # get adjacent indexes from
+        pass
 
 if __name__ == "__main__":
     print(f"Puzzle 1: {sum_all_adjacent_numbers()}")

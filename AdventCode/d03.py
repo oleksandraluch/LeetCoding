@@ -1,5 +1,6 @@
 # Day 3
 
+# p1
 # Returns sum of the numbers in line that whose indexes are in adjacent_indexes
 # number is considered to be adjacent even if one digit has adjacent index
 def sum_adjacent_numbers(line, adjacent_indexes):
@@ -22,10 +23,10 @@ def sum_adjacent_numbers(line, adjacent_indexes):
             reading_num = False
             is_adjacent = False
     return total_sum
-        
+
+# p1
 # Returns indexes where adjacent numbers can appear in the previous or next line
-def get_adjacent_indexes(line):
-    symbols = "!@#$%^&*()_-+={}[]/"
+def get_adjacent_indexes(line, symbols="!@#$%^&*()_-+={}[]/"):
     adj_indexes = []
     for index, val in enumerate(line):
         # check if val is a symbol
@@ -48,6 +49,7 @@ def sum_all_adjacent_numbers(filename="d03_input.txt"):
 
     ifile = open(filename, "r")
     lines = ifile.readlines()
+    ifile.close()
     sum_adjacent = 0
 
     for index, line in enumerate(lines):
@@ -67,8 +69,61 @@ def sum_all_adjacent_numbers(filename="d03_input.txt"):
         # adjacent_indexes.sort()
             
         sum_adjacent += sum_adjacent_numbers(line, adjacent_indexes)
-    ifile.close()
     return sum_adjacent
+
+# Returns the product of numbers in line that whose indexes are in adjacent_indexes
+# number is considered to be adjacent even if one digit has adjacent index
+def multiply_adjacent_numbers(line, adj_indexes):
+    pass
+
+# p2
+# Returns a dictionary, where 
+# keys: are indexes where adjacent symbols can appear in the previous or next line
+# vals: list of numbers adjacent to an index
+def get_adjacent_indexes_and_nums(line, symbols="0123456789"):
+    adj_dict = {}
+    reading_num = False
+    curr_num = ""
+
+    for index, val in enumerate(line):
+
+        # check if val in a number
+        if val in symbols and not reading_num:
+            reading_num = True
+            curr_num += val
+            adj_dict[index] = ["empty"]
+        elif val in symbols and reading_num:
+            curr_num += val
+            adj_dict[index] = ["empty"]
+        else:
+            if len(curr_num) > 0:
+                for key in adj_dict:
+                    if adj_dict[key] == ["empty"]:
+                        adj_dict[key] = curr_num
+            curr_num = ""
+            reading_num = False
+        
+        # ensure that number is added to dict if it is the last symbol in line
+        if index == len(line) - 1:
+            if len(curr_num) > 0:
+                for key in adj_dict:
+                    if adj_dict[key] == ["empty"]:
+                        adj_dict[key] = curr_num
+
+    return adj_dict
+
+# Puzzle 2 Solution
+def sum_gear_ratios(filename="d03_input.txt"):
+    
+    ifile = open(filename, "r")
+    lines = ifile.readlines()
+    ifile.close()
+    #total_sum = 0
+
+    # for index, line in enumerate(lines):
+    print(get_adjacent_indexes_and_nums(lines[0]))
 
 if __name__ == "__main__":
     print(f"Puzzle 1: {sum_all_adjacent_numbers()}")
+    #print(f"Puzzle 2: {sum_gear_ratios('d03_smoke.txt')}")
+    sum_gear_ratios('d03_smoke.txt')

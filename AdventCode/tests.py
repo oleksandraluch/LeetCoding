@@ -3,7 +3,7 @@
 import unittest
 from d01 import puzzle1, puzzle2
 from d02 import sum_valid_games, sum_powers_of_games, games
-from d03 import get_adjacent_indexes, sum_all_adjacent_numbers
+from d03 import get_adjacent_indexes, sum_all_adjacent_numbers, get_adjacent_indexes_and_nums
 
 class TestDay01(unittest.TestCase):
 
@@ -31,6 +31,9 @@ class testDay03(unittest.TestCase):
 
     def test_puzzle1(self):
         self.assertEqual(sum_all_adjacent_numbers(), 528819)
+
+    def test_get_adjacent_indexes_and_nums(self):
+        self.assertEqual(get_adjacent_indexes_and_nums("...231,*i..45"), {3: '231', 4: '231', 5: '231', 11: '45', 12: '45'})
 
 if __name__ == "__main__":
     unittest.main()

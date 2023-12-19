@@ -71,4 +71,4 @@ def sum_all_adjacent_numbers(filename="d03_input.txt"):
     return sum_adjacent
 
 if __name__ == "__main__":
-    print(f"Puzzle 1: {sum_all_adjacent_numbers('d03_input.txt')}")
+    print(f"Puzzle 1: {sum_all_adjacent_numbers()}")

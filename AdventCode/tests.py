@@ -33,7 +33,8 @@ class testDay03(unittest.TestCase):
         self.assertEqual(sum_all_adjacent_numbers(), 528819)
 
     def test_get_adjacent_indexes_and_nums(self):
-        self.assertEqual(get_adjacent_indexes_and_nums("...231,*i...5"), {2: '231',3: '231', 4: '231', 5: '231', 6: '231', 11: '5', 12: '5'})
+        self.assertEqual(get_adjacent_indexes_and_nums(".2)(&).."), {0: '2', 1: '2', 2: '2'})
+        self.assertEqual(get_adjacent_indexes_and_nums("...231,*i...5"), {2: '231', 3: '231', 4: '231', 5: '231', 6: '231', 11: '5', 12: '5'})
 
 if __name__ == "__main__":
     unittest.main()

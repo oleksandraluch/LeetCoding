@@ -6,22 +6,22 @@
 def sum_adjacent_numbers(line, adjacent_indexes):
     total_sum = 0
     reading_num = False
-    is_adjacent = False
+    adjacent_to = False
     curr_num = ""
 
     for index, symbol in enumerate(line):
         if symbol.isnumeric() and not reading_num:
             curr_num = symbol
             reading_num = True
-            if index in adjacent_indexes: is_adjacent = True
+            if index in adjacent_indexes: adjacent_to = True
         elif symbol.isnumeric() and reading_num:
             curr_num += symbol
-            if index in adjacent_indexes: is_adjacent = True
+            if index in adjacent_indexes: adjacent_to = True
         elif not symbol.isnumeric():
-            if curr_num != "" and is_adjacent: 
+            if curr_num != "" and adjacent_to: 
                 total_sum += int(curr_num)
             reading_num = False
-            is_adjacent = False
+            adjacent_to = False
     return total_sum
 
 # p1
@@ -74,7 +74,7 @@ def sum_all_adjacent_numbers(filename="d03_input.txt"):
 # p2
 # Returns the the sum of products of numbers adjacent to * in line
 # Indexes of adjacent numbers are keys in arg dictionaries: indexes_prev, indexes_line, indexes_next.
-# Numbers are values in arg dicts
+# Adjacent numbers are stored in arg dicts values. Each value is a list and and can store a few adjacent numbers
 def multiply_adjacent_numbers(line, indexes_prev, indexes_line, indexes_next):
     sum_of_products = 0
 
@@ -83,24 +83,32 @@ def multiply_adjacent_numbers(line, indexes_prev, indexes_line, indexes_next):
         # if * is found
         if val == '*':
             # multiply the adjacent numbers with product
+            
             product = 1
-            is_adjacent = 0
+            adjacent_to = 0
 
             if index in indexes_prev:
-                product *= int(indexes_prev[index])
-                is_adjacent += 1
-            if index in indexes_line: 
-                product *= int(indexes_line[index])
-                is_adjacent += 1
+                for num in indexes_prev[index]:
+                    product *= int(num)
+                    adjacent_to += 1
+
+            if index in indexes_line:
+                for num in indexes_line[index]:
+                    product *= int(num)
+                    adjacent_to += 1
+                    
             if index in indexes_next:
-                product *= int(indexes_next[index])
-                is_adjacent += 1
+                for num in indexes_next[index]:
+                    product *= int(num)
+                    adjacent_to += 1
             
             # check if 2 adjacent numbers were multiplied
-            if is_adjacent == 2:
+            if adjacent_to == 2:
                 sum_of_products += product
+
     return sum_of_products
 
+# todo: remove repetitions
 # p2
 # Returns a dictionary, where 
 # key: index where adjacent symbols can appear in the previous, current or next line
@@ -127,7 +135,7 @@ def get_adjacent_indexes_and_nums(line):
                 else: adj_dict[index - 1] = ['e']
             
             # add 'e' for next index
-            if index < len(line) - 2:
+            if index < len(line) - 1:
                 if (index + 1) in adj_dict: adj_dict[index + 1].append('e')
                 else: adj_dict[index + 1] = ['e']
 
@@ -141,7 +149,7 @@ def get_adjacent_indexes_and_nums(line):
             if index > 0:
                 if (index - 1) in adj_dict: adj_dict[index - 1].append('e')
                 else: adj_dict[index - 1] = ['e']
-            if index < len(line) - 2:
+            if index < len(line) - 1:
                 if (index + 1) in adj_dict: adj_dict[index + 1].append('e')
                 else: adj_dict[index + 1] = ['e']
             # ! REPETITION
@@ -187,6 +195,19 @@ def sum_gear_ratios(filename="d03_input.txt"):
     ifile.close()
     total_sum = 0
 
+    # smoke
+    # adj_prev = {}
+    # adj_line = {}
+    # adj_next = {}
+    # adj_prev = get_adjacent_indexes_and_nums(lines[2])
+    # adj_line = get_adjacent_indexes_and_nums(lines[3])
+    # adj_next = get_adjacent_indexes_and_nums(lines[4])
+
+    # print(f"Adj dicts:\n{adj_prev}\n{adj_line}\n{adj_next}")
+
+    # print(f"line 4: {multiply_adjacent_numbers(lines[3], adj_prev, adj_line, adj_next)}")
+    # ! smoke
+
     for index, line in enumerate(lines):
         adj_prev = {}
         adj_line = {}
@@ -197,16 +218,13 @@ def sum_gear_ratios(filename="d03_input.txt"):
         # get adjacent indexes from the line
         adj_line = get_adjacent_indexes_and_nums(line)
         # get adjacent indexes fro the next line
-        if index < len(lines) - 2:
+        if index < len(lines) - 1:
             adj_next = get_adjacent_indexes_and_nums(lines[index + 1])
         
         total_sum += multiply_adjacent_numbers(line, adj_prev, adj_line, adj_next)
     return total_sum
 
 if __name__ == "__main__":
-    # print(f"Puzzle 1: {sum_all_adjacent_numbers()}")
-    # print(f"Puzzle 2: {sum_gear_ratios()}")
-    ifile = open("d03_smoke.txt", "r")
-    lines = ifile.readlines()
-    ifile.close()
-    print(get_adjacent_indexes_and_nums(lines[0]))
+    
+    print(f"Puzzle 1: {sum_all_adjacent_numbers()}")
+    print(f"Puzzle 2: {sum_gear_ratios()}")

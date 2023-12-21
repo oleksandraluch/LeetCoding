@@ -101,55 +101,83 @@ def multiply_adjacent_numbers(line, indexes_prev, indexes_line, indexes_next):
                 sum_of_products += product
     return sum_of_products
 
-# problem - what if one line has 2 numbers adjacent to one index
 # p2
 # Returns a dictionary, where 
-# keys: indexes where adjacent symbols can appear in the previous or next line
-# vals: numbers adjacent to an index (key)
-def get_adjacent_indexes_and_nums(line, symbols="0123456789"):
+# key: index where adjacent symbols can appear in the previous, current or next line
+# val: list of numbers adjacent to an index (key)
+def get_adjacent_indexes_and_nums(line):
     adj_dict = {}
     reading_num = False
     curr_num = ""
 
     for index, val in enumerate(line):
 
-        # check if val in a number
-        if val in symbols and not reading_num:
+        # if val is a num and is a first digit in a number
+        if val.isnumeric() and not reading_num:
             reading_num = True
-            curr_num += val
-            adj_dict[index] = "e" # e for empty
-            # add prev index
-            if index > 0:
-                adj_dict[index - 1] = "e"
-            # add next index
-            if index < len(line) - 2:
-                adj_dict[index + 1] = "e"
-        elif val in symbols and reading_num:
-            curr_num += val
-            adj_dict[index] = "e"
-            # add prev index
-            if index > 0:
-                adj_dict[index - 1] = "e"
-            # add next index
-            if index < len(line) - 2:
-                adj_dict[index + 1] = "e"
-        else:
-            if len(curr_num) > 0:
-                for key in adj_dict:
-                    if adj_dict[key] == "e":
-                        adj_dict[key] = curr_num
+            curr_num = val
 
-            curr_num = ""
+            # add a placeholde for current index to dict
+            if index in adj_dict: adj_dict[index].append('e') # e for empty
+            else: adj_dict[index] = ['e']
+
+            # add 'e' for previous index
+            if index > 0:
+                if (index - 1) in adj_dict: adj_dict[index - 1].append('e')
+                else: adj_dict[index - 1] = ['e']
+            
+            # add 'e' for next index
+            if index < len(line) - 2:
+                if (index + 1) in adj_dict: adj_dict[index + 1].append('e')
+                else: adj_dict[index + 1] = ['e']
+
+        # if val is a num and isn't the first digit in a number
+        elif val.isnumeric() and reading_num:
+            curr_num += val
+
+            # REPETITION -> from above if statement
+            if index in adj_dict: adj_dict[index].append('e')
+            else: adj_dict[index] = ['e']
+            if index > 0:
+                if (index - 1) in adj_dict: adj_dict[index - 1].append('e')
+                else: adj_dict[index - 1] = ['e']
+            if index < len(line) - 2:
+                if (index + 1) in adj_dict: adj_dict[index + 1].append('e')
+                else: adj_dict[index + 1] = ['e']
+            # ! REPETITION
+                
+        # if val isn't numeric
+        else:
+            # if curr_num exists
+            if len(curr_num) > 0:
+                # replace all placeholders in adj_dict with curr_num
+                for key in adj_dict:
+                    for i, elem in enumerate(adj_dict[key]):
+                        # if curr_num isn't in adj_dict yet and there is a placeholder
+                        if not curr_num in adj_dict[key] and elem == 'e':
+                            # replace a placeholder with curr_num
+                            adj_dict[key][i] = curr_num 
+                        # if curr_num is in adj_dict yet and there is a placeholder
+                        elif curr_num in adj_dict[key] and elem == 'e':
+                            # remove placeholder
+                            adj_dict[key].remove('e')
+
             reading_num = False
         
         # ensure that number is added to dict if it is the last symbol in line
         if index == len(line) - 1:
+
+            # REPETITION -> from above else statement:
             if len(curr_num) > 0:
                 for key in adj_dict:
-                    if adj_dict[key] == "e":
-                        adj_dict[key] = curr_num
-
+                    for i, elem in enumerate(adj_dict[key]):
+                        if not curr_num in adj_dict[key] and elem == 'e':
+                            adj_dict[key][i] = curr_num 
+                        elif curr_num in adj_dict[key] and elem == 'e':
+                            adj_dict[key].remove('e')
+            # ! REPETITION
     return adj_dict
+
 
 # Puzzle 2 Solution
 def sum_gear_ratios(filename="d03_input.txt"):
@@ -176,5 +204,9 @@ def sum_gear_ratios(filename="d03_input.txt"):
     return total_sum
 
 if __name__ == "__main__":
-    print(f"Puzzle 1: {sum_all_adjacent_numbers()}")
-    print(f"Puzzle 2: {sum_gear_ratios()}")
+    # print(f"Puzzle 1: {sum_all_adjacent_numbers()}")
+    # print(f"Puzzle 2: {sum_gear_ratios()}")
+    ifile = open("d03_smoke.txt", "r")
+    lines = ifile.readlines()
+    ifile.close()
+    print(get_adjacent_indexes_and_nums(lines[0]))

@@ -1,4 +1,6 @@
 # Day 3
+# puzzle 1 - solved
+# puzzle 2 - not solved
 
 # p1
 # Returns sum of the numbers in line that whose indexes are in adjacent_indexes
@@ -83,24 +85,23 @@ def multiply_adjacent_numbers(line, indexes_prev, indexes_line, indexes_next):
         # if * is found
         if val == '*':
             # multiply the adjacent numbers with product
-            
             product = 1
             adjacent_to = 0
 
             if index in indexes_prev:
                 for num in indexes_prev[index]:
-                    product *= int(num)
-                    adjacent_to += 1
+                    product = product * int(num)
+                    adjacent_to = adjacent_to + 1
 
             if index in indexes_line:
                 for num in indexes_line[index]:
-                    product *= int(num)
-                    adjacent_to += 1
+                    product = product * int(num)
+                    adjacent_to = adjacent_to + 1
                     
             if index in indexes_next:
                 for num in indexes_next[index]:
-                    product *= int(num)
-                    adjacent_to += 1
+                    product = product * int(num)
+                    adjacent_to = adjacent_to + 1
             
             # check if 2 adjacent numbers were multiplied
             if adjacent_to == 2:
@@ -217,7 +218,7 @@ def sum_gear_ratios(filename="d03_input.txt"):
             adj_prev = get_adjacent_indexes_and_nums(lines[index - 1])
         # get adjacent indexes from the line
         adj_line = get_adjacent_indexes_and_nums(line)
-        # get adjacent indexes fro the next line
+        # get adjacent indexes from the next line
         if index < len(lines) - 1:
             adj_next = get_adjacent_indexes_and_nums(lines[index + 1])
         

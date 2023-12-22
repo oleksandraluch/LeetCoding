@@ -3,7 +3,7 @@
 import unittest
 from d01 import puzzle1, puzzle2
 from d02 import sum_valid_games, sum_powers_of_games, games
-from d03 import get_adjacent_indexes, sum_all_adjacent_numbers, get_adjacent_indexes_and_nums
+from d03 import get_adjacent_indexes, sum_all_adjacent_numbers, get_adjacent_indexes_and_nums, sum_gear_ratios
 
 class TestDay01(unittest.TestCase):
 
@@ -36,6 +36,9 @@ class testDay03(unittest.TestCase):
         self.assertEqual(get_adjacent_indexes_and_nums(".2)(&).."), {0: ['2'], 1: ['2'], 2: ['2']})
         self.assertEqual(get_adjacent_indexes_and_nums("...231,*i...5"), {2: ['231'], 3: ['231'], 4: ['231'], 5: ['231'], 6: ['231'], 11: ['5'], 12: ['5']})
         self.assertEqual(get_adjacent_indexes_and_nums("...231,67*i...5"), {2: ['231'], 3: ['231'], 4: ['231', '67'], 5: ['231'], 6: ['231', '67'], 7: ['67'], 8: ['67'], 9: ['67'], 13: ['5'], 14: ['5']})
+
+    def test_puzzle2(self):
+        self.assertEqual(sum_gear_ratios(), 80403602)
 
 if __name__ == "__main__":
     unittest.main()

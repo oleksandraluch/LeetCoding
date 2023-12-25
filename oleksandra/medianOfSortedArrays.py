@@ -33,9 +33,3 @@ def findMedianSortedArrays(nums1, nums2):
     else:
         # median to be calculated
         return (lst[lst_len//2] + lst[lst_len//2 - 1]) / 2
-
-
-# if __name__ == "__main__":
-#     lst1 = [3,4]
-#     lst2 = [1,2]
-#     print(findMedianSortedArrays(lst2, lst1))
